@@ -1,0 +1,131 @@
+# .gitlab-ci.yml - Katsimpras Drosos 
+# University of West Attica - Informatics and Computer Engineering
+# Diploma Thesis Project: Infrastructure as Code with Terraform & GitLab CI/CD
+
+# Include GitLab's Terraform base template for CI/CD
+include:
+  - template: Terraform/Base.latest.gitlab-ci.yml 
+
+# -------------------------
+# CI/CD Pipeline Variables
+# -------------------------
+variables:
+  IGNORE_TF_DEPRECATION_WARNING: "true"
+  TF_STATE_NAME: x${CI_ENVIRONMENT_NAME}
+  TF_CLI_ARGS_plan: "-var-file=vars/${CI_ENVIRONMENT_NAME}.tfvars"
+  IMAGE_NAME: katsdros/test
+  IMAGE_TAG: python-app-1.0
+  DOCKER_TLS_CERTDIR: "/certs"
+
+# -----------------
+# Pipeline Stages
+# -----------------
+stages:
+  - validate
+  - test
+  - build
+  - deploy
+
+# ---------------------------------------
+# Terraform Format Validation (Optional)
+# ---------------------------------------
+fmt:
+  extends: .terraform:fmt
+  needs: []
+  allow_failure: true
+
+# ---------------------------
+# Terraform Validation Stage
+# ---------------------------
+validate:
+  extends: .terraform:validate
+  needs: []
+  script:
+    - terraform --version # Print Terraform version for debugging
+
+# -----------------------
+# Application Test Stage
+# -----------------------
+test-app:
+  stage: test
+  image: python:3.9-slim-buster
+  before_script:
+    - apt-get update && apt-get install -y make git
+    - pip install --upgrade pip
+    - pip install -r src/requirements.txt
+    - python --version
+    - pip list
+  script:
+    - make test
+
+# ---------------------------------------------------
+# Provision VM on Linode (Infrastructure Deployment)
+# ---------------------------------------------------
+build-linode:
+  extends: .terraform:build
+  needs:
+    - test-app
+  environment:
+    name: drososdevenv
+    action: prepare
+
+# ----------------------------
+# Build and Push Docker Image
+# ----------------------------
+build-image:
+  extends: .terraform:build
+  needs:
+    - test-app
+  environment:
+    name: drososdevenv
+    action: prepare
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG -f build/Dockerfile .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+
+# -----------------------------------------
+# Deploy Linode Infrastructure & Output IP
+# -----------------------------------------
+deploy-linode:
+  extends: .terraform:deploy
+  dependencies:
+    - build-linode
+  environment:
+    name: drososdevenv
+    action: start
+  after_script:
+    - echo "Linode deployment complete!!!"
+    - INSTANCE_IP=$(terraform output -json instance_ip | jq -r '.')
+    - echo "Connecting to $INSTANCE_IP ...."
+    - echo "$INSTANCE_IP" > instance_ip.txt # Save INSTANCE_IP to a text file
+  artifacts:
+    paths:
+      - instance_ip.txt
+
+# -----------------------------------
+# Deploy Dockerized App to Linode VM
+# -----------------------------------
+deploy-image:
+  extends: .terraform:deploy
+  image: mcr.microsoft.com/powershell
+  environment:
+    name: drososdevenv
+    action: prepare
+  before_script:
+    - chmod 400 $SSH_KEY
+  script: |
+    LINODE_IP=$(pwsh -Command "Get-Content -Path instance_ip.txt")
+    sleep 10
+    echo "Connecting to $LINODE_IP ..."
+    ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@$LINODE_IP " 
+      docker login -u $REGISTRY_USER -p $REGISTRY_PASS && 
+      docker run -d -p 5009:5009 $IMAGE_NAME:$IMAGE_TAG"
+  needs:
+    - deploy-linode
