@@ -31,17 +31,17 @@ This repository showcases the practical part of my diploma thesis, completed at 
 
 terraform-ci-cd-infra/
 │
-├── terraform/               # Terraform configuration files (.tf)
-|   ├── README.md
-│   ├── drosos.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   └── linode-vm01.tf
+├── terraform/ # Terraform configuration files (.tf)
+│ ├── main.tf
+│ ├── variables.tf
+│ ├── outputs.tf
+│ ├── linode-vm01.tf
+│ └── README.md
 │
-├── screenshots/             # Diagrams and output visuals
-│   ├── concepts/            # Theoretical materials and DevOps diagrams
-│   └── implementation/      # Terraform, pipeline, Docker provisioning screenshots
+├── screenshots/ # Diagrams and output visuals
+│ ├── concepts/ # Theoretical materials and DevOps diagrams
+│ └── implementation/ # Terraform, pipeline, Docker provisioning screenshots
 │
-├── .gitlab-ci.yml           # GitLab CI/CD pipeline configuration
-├── Katsimpras_Drosos_diploma_thesis.pdf       # Full thesis report (Greek language)
-└── README.md                # This file
+├── .gitlab-ci.yml # GitLab CI/CD pipeline configuration
+├── Katsimpras_Drosos_diploma_thesis.pdf # Full thesis report (Greek language)
+└── README.md # This file
