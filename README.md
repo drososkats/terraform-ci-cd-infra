@@ -60,5 +60,73 @@ The Terraform files define:
 
 > See [`terraform/`](./terraform/) for detailed configuration.
 
+--- 
 
+## 🛠️ GitLab CI/CD Pipeline
+
+The `.gitlab-ci.yml` file automates:
+
+- Terraform `init`, `plan`, and `apply`
+- Testing a Python demo app (not included here)
+- Docker image build and push
+- Deploying the image on the provisioned Linode VM using SSH
+
+> Full pipeline stages and Docker deployment shown in [`screenshots/implementation/`](./screenshots/implementation/)
+
+---
+
+## 🖼️ Sample Visuals
+
+| Concepts (Theory)                                | Implementation (Hands-On)                         |
+|--------------------------------------------------|--------------------------------------------------|
+| DevOps lifecycle, IaC comparison                 | Terraform plan output, CI/CD pipeline stages     |
+| Cloud architecture diagrams                      | Docker installed on VM, deployed container app   |
+
+> More visuals in the [`screenshots/`](./screenshots/) folder.
+
+---
+
+## 🧠 Key Learnings
+
+- Hands-on application of Infrastructure as Code and DevOps principles
+- Integration of open-source tooling in cloud provisioning
+- Practical experience with cloud deployment and automation workflows
+- Team-ready mindset for CI/CD-based engineering environments
+
+---
+
+## 📎 Additional Notes
+
+- The deployed application is a **simple demo app** used for testing CI/CD and Docker functionality.
+- This repository does not include application code for clarity and licensing reasons.
+- Secrets and credentials are managed via GitLab CI/CD project variables.
+
+---
+
+## 📄 Full Report
+
+You can find the full diploma thesis report [here](./Katsimpras_Drosos_diploma_thesis.pdf) (written in Greek).
+
+---
+
+## 💼 Author
+
+**Drosos Katsimpras**  
+📍 Athens, Greece  
+🎓 University of West Attica — Informatics & Computer Engineering  
+🔗 [LinkedIn](https://linkedin.com/in/katsimprasdrosos)  
+🔗 [GitHub](https://github.com/drososkats)
+
+---
+
+## 📬 Contact & Use
+
+This project is part of my personal learning journey and academic work.  
+If you'd like to discuss collaboration or opportunities in cloud or DevOps roles, feel free to connect or contact me.
+
+---
+
+## 🛡 License
+
+This repository is licensed under the [MIT License](./LICENSE).
 
