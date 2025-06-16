@@ -29,6 +29,7 @@ This repository showcases the practical part of my diploma thesis, completed at 
 
 ## 📁 Repository Structure
 
+```text
 terraform-ci-cd-infra/
 │
 ├── terraform/ # Terraform configuration files (.tf)
