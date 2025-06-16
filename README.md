@@ -41,9 +41,24 @@ terraform-ci-cd-infra/
 │ ├── drosos.tf
 │ ├── linode-vm01.tf
 │ ├── output.tf
-│ ├── variables.tf
+│ └── variables.tf
 │
 ├── .gitlab-ci.yml # GitLab CI/CD pipeline configuration
 ├── Katsimpras_Drosos_diploma_thesis.pdf # Full thesis report (Greek language)
 ├── LICENSE
 └── README.md # This file
+
+```
+## ⚙️ Terraform Configuration
+
+The Terraform files define:
+
+- A Linode VM using dynamic variables (`VM_NAME`, `VM_IMAGE`, `VM_REGION`, etc.)
+- SSH access using provided public/private keys
+- A `remote-exec` provisioner to install **Docker** on VM creation
+- Outputs the public IP for deployment
+
+> See [`terraform/`](./terraform/) for detailed configuration.
+
+
+
