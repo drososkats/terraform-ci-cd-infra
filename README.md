@@ -13,6 +13,7 @@ This repository showcases the practical part of my diploma thesis, completed at 
 - Compare Iac tools and evaluate cloud automation workflows
 
 ---
+
 ## 🔧 Technologies Used
 
 | Tool        | Purpose                            |
@@ -23,3 +24,17 @@ This repository showcases the practical part of my diploma thesis, completed at 
 | **Linode**     | Cloud provider (IaaS) |
 | **Git**        | Version control |
 | **Linux (Ubuntu)** | VM base image and shell environment |
+
+---
+
+## 📁 Repository Structure
+
+terraform-ci-cd-infra/
+│
+├── terraform/ # Terraform configuration files (.tf)
+├── screenshots/ # Diagrams and output visuals
+│ ├── concepts/ # Theoretical materials and DevOps diagrams
+│ └── implementation/ # Terraform, pipeline, Docker provisioning screenshots
+├── .gitlab-ci.yml # GitLab CI/CD pipeline configuration
+├── Katsimpras_Drosos_diploma_thesis.pdf # Full thesis report (Greek language)
+└── README.md # This file
