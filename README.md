@@ -13,3 +13,13 @@ This repository showcases the practical part of my diploma thesis, completed at 
 - Compare Iac tools and evaluate cloud automation workflows
 
 ---
+## 🔧 Technologies Used
+
+| Tool        | Purpose                            |
+|-------------|-------------------------------------|
+| **Terraform** | Infrastructure provisioning on Linode |
+| **GitLab CI/CD** | Automating infrastructure deployment and app delivery |
+| **Docker**     | Containerization and runtime environment |
+| **Linode**     | Cloud provider (IaaS) |
+| **Git**        | Version control |
+| **Linux (Ubuntu)** | VM base image and shell environment |
