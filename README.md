@@ -1,4 +1,4 @@
-# Diploma Thesis: Innovative Approaches of SDLC (Code Everyrithing)
+# Diploma Thesis: Innovative Approaches of SDLC (Code Everything)
 
 This repository showcases the practical part of my diploma thesis, completed at the University of West Attica, Department of Informatics and Computer Engineering. The project focuses on Infrastructure as Code (IaC) and DevOps practices for provisioning cloud infrastructure and automating deployments using **Terraform**, **GitLab CI/CD**, and **Docker**.
 
